@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>音乐播放</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				background-color: #1A1A1A;
+			}
+			
+			.musicbox {
+				width: 400px;
+				height: 340px;
+				border: solid 1px #3c3c3c;
+				margin: 50px auto;
+			}
+			
+			.audio {
+				width: 400px;
+				height: 53px;
+			}
+			
+			.img {
+				/*设置透明度*/
+				filter: alpha(opacity=50);
+				-moz-opacity: 0.6;
+				-khtml-opacity: 0.4;
+				opacity: 0.5;
+				background-image: url('img/pao.png');
+				background-repeat: no-repeat;
+				background-size: 100%;
+				background-position-y: 0px;
+				overflow: hidden;
+				width: 400px;
+				height: 287px;
+			}
+			
+			.lrc {
+				width: 400px;
+				height: 287px;
+				position: absolute;
+				top: 0;
+				color: #fff;
+				margin: 80px auto;
+				text-align: center;
+				
+			}
+			
+			.container {
+				position: relative;
+				overflow: hidden;
+			}
+			p{
+				height: 25px;
+				line-height: 25px;
+				margin-top: 10px;
+			}
+		</style>
+	</head>
+	<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			
+			lrcCtrl.active = function(p){
+				p.style.color = "rgb(166, 226, 45)"
+				p.style.fontWeight = 500;
+			}
+			lrcCtrl.normal = function(p){
+				p.style.color = "white"
+				p.style.fontWeight = "";
+			}
+			
+			var lrc1 = document.getElementById("lrc1");
+			var audio1 = document.getElementById("audio1");
+			
+			var lrcObj = loadLrc(lrc1,"music/lv5.lrc");
+			lrcObj.fix =35;
+			activeAudio(audio1,lrcObj);
+		}
+	</script>
+	<body>
+		<div class="musicbox">
+			<div class="container">
+				<div class="img"></div>
+				<div class="lrc" id="lrc1">
+					
+				</div>
+			</div>
+
+			<audio class="audio" controls="controls" id="audio1" autoplay="autoplay"
+				src="music/lv5.mp3">
+				
+			</audio>
+		</div>
+	</body>
+
+</html>

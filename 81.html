@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>九九八十一</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+	<body>
+		<audio controls="controls" id="audio1" src="music/九九八十一.mp3" autoplay="autoplay">
+			你的浏览器不支持html5!
+		</audio>
+		<div class="container">
+			<div class="lrc" id="lrc1">
+
+			</div>
+
+		</div>
+	</body>
+	<script type="text/javascript">
+	
+		
+		
+		var lrc1 = document.getElementById("lrc1");
+		
+		var lrc = loadLrc(lrc1,"music/九九八十一.lrc");
+		
+		lrc.fix = 30;
+		
+	
+		var audio1 = document.getElementById("audio1");
+		activeAudio(audio1,lrc);
+	</script>
+</html>
