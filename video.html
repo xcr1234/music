@@ -7,6 +7,12 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 		<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			p{
+				height: 22px;
+				line-height: 22px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -25,8 +31,7 @@
 			$(p).css({
 				"background-color":"#4A182F",
 				"color":"white",
-				"height":"22px",
-				"line-height":"22px"
+				
 			});
 		}
 	
@@ -34,8 +39,7 @@
 			$(p).css({
 				"background-color":"",
 				"color":"",
-				"height":"",
-				"line-height":""
+				
 				
 			});
 		
@@ -45,7 +49,7 @@
 		var lrc1 = document.getElementById("lrc1");
 		var lrc = loadLrc(lrc1,"music/九九八十一.lrc");
 		lrc.offset =6.5;
-		lrc.fix = 30;
+		lrc.fix = 22;
 		activeAudio(video1,lrc);
 		
 		/*

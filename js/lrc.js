@@ -1,23 +1,20 @@
 ﻿(function() {
 
-	
 	//全局controller样式。
 	var controller = window.lrcCtrl = {};
-	
+
 	controller.active = function(p) {
 
 		p.style.fontWeight = "700";
 	}
-	
+
 	controller.normal = function(p) {
 		p.style.fontWeight = "normal";
 	}
-	
+
 	//全局fix默认配置
 	var fix = window.lrcFix = 28;
-	
 
-	
 	//歌词计时器 constructor
 	function timer(audio, lrc) {
 		this.audio = audio;
@@ -27,21 +24,21 @@
 		this.currentTime = 0;
 		this.fix = lrc.fix;
 		this.offset = parseFloat(lrc.offset == undefined ? 0 : lrc.offset);
-		
+
 		this.lrcobj = lrc;
 	}
-	
-	timer.prototype.active = function(p){
-		if(typeof this.lrcobj.active == "function"){
+
+	timer.prototype.active = function(p) {
+		if (typeof this.lrcobj.active == "function") {
 			this.lrcobj.active(p);
-		}else if(typeof controller.active == "function"){
+		} else if (typeof controller.active == "function") {
 			controller.active(p);
 		}
 	}
-	timer.prototype.normal = function(p){
-		if(typeof this.lrcobj.normal == "function"){
+	timer.prototype.normal = function(p) {
+		if (typeof this.lrcobj.normal == "function") {
 			this.lrcobj.normal(p);
-		}else if(typeof controller.normal == "function"){
+		} else if (typeof controller.normal == "function") {
 			controller.normal(p);
 		}
 	}
@@ -52,9 +49,9 @@
 			return;
 		}
 		//获取下一个歌词的时间
-		var nextTime = parseFloat(this.lrc[this.current].dataset.time) + this.offset;
+		var nextTime = parseFloat(data(this.lrc[this.current],"time")) + this.offset;
 
-		if (timeAccept(current,nextTime)) {
+		if (timeAccept(current, nextTime)) {
 			this.moveNext();
 
 			this.current++;
@@ -65,7 +62,7 @@
 		var marginTop = parseInt(css(this.dom, "marginTop"));
 		if (this.current > 0) this.normal(this.lrc[this.current - 1]);
 		this.active(this.lrc[this.current]);
-		this.dom.style.marginTop = (marginTop - (this.fix != undefined ? this.fix :  fix)) + "px";
+		this.dom.style.marginTop = (marginTop - (this.fix != undefined ? this.fix : fix)) + "px";
 
 	}
 
@@ -73,9 +70,9 @@
 		var f = -1;
 
 		for (var i = this.lrc.length - 1; i >= 0; i--) {
-			var ptime = parseFloat(this.lrc[i].dataset.time) + this.offset;
+			var ptime = parseFloat(data(this.lrc[i],"time")) + this.offset;
 
-			if (f < 0 && timeAccept(time,ptime)) {
+			if (f < 0 && timeAccept(time, ptime)) {
 				f = i;
 			}
 			this.normal(this.lrc[i]);
@@ -89,9 +86,37 @@
 		}
 
 	}
-	
-	
+
 	//utils
+
+	//兼容ie浏览器不支持array.foreach方法
+	//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+	if (!Array.prototype.forEach) {
+		Array.prototype.forEach = function(callback, thisArg) {
+			var T, k = 0;
+			if (this == null) {
+				throw new TypeError(' this is null or not defined');
+			}
+			var O = Object(this);
+			var len = O.length >>> 0;
+			if (typeof callback !== "function") {
+				throw new TypeError(callback + ' is not a function');
+			}
+			if (arguments.length > 1) {
+				T = thisArg;
+			}
+			while(k<len){
+				var kValue;
+				if(k in O){
+					kValue = O[k];
+					callback.call(T, kValue, k, O);
+				}
+				k++;
+			}
+
+		}
+
+	}
 	
 	function ajax_getXml(url, success) {
 		var xmlhttp;
@@ -128,7 +153,7 @@
 		xmlhttp.send();
 
 	}
-	
+
 	function parseLyric(text) {
 		//这个方法是在网上找的，因为我对正则表达式不熟
 
@@ -155,8 +180,7 @@
 				value = v.replace(pattern, '');
 			if (time != null) {
 				//这里我加了一层判断，xcr
-				
-				
+
 				//因为一行里面可能有多个时间，所以time有可能是[xx:xx.xx][xx:xx.xx][xx:xx.xx]的形式，需要进一步分隔
 				time.forEach(function(v1, i1, a1) {
 					//去掉时间里的中括号得到xx:xx.xx
@@ -175,11 +199,9 @@
 		return result;
 	}
 
-	
-	function timeAccept(currentTime,nextTime){
-		return currentTime>nextTime||Math.abs(currentTime-nextTime)<=0.5
+	function timeAccept(currentTime, nextTime) {
+		return currentTime > nextTime || Math.abs(currentTime - nextTime) <= 0.5
 	}
-	
 
 	//模拟jquery css方法的实现
 	function css(dom, name) {
@@ -190,20 +212,38 @@
 			return dom.currentStyle[name];
 		}
 	}
-	
-	
-	
+	//模拟jquery data方法的实现
+	//因为虽然ie9支持html5的audio，但不支持dataset
+	function data(dom,name,value){
+		if(document.createElement("a").dataset){
+			if(value==undefined){
+				return dom.dataset[name];
+			}else{
+				return dom.dataset[name]=value;
+			}
+			
+		}else{
+			var attr = "data-"+name;
+			if(value==undefined){
+				return dom.getAttribute(attr);
+			}else{
+				return dom.setAttribute(attr,value);
+			}
+		}
+	}
+
 	// window output
 	var loadLrc = window.loadLrc = function(dom, url) {
 		this.dom = dom;
 
 		//解析lrc格式的lrc文件。
-		ajax_getText(url, function(data) {
-			var arr = parseLyric(data);
+		ajax_getText(url, function(d) {
+			var arr = parseLyric(d);
 			for (var i = 0; i < arr.length; i++) {
 				var lry = arr[i];
 				var p = document.createElement("p");
-				p.dataset.time = lry[0];
+				
+				data(p,"time",lry[0]);
 				p.innerHTML = lry[1];
 				dom.appendChild(p);
 			}
