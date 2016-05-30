@@ -147,6 +147,16 @@
 			var lrcObj = loadLrc(lrc1, "music/lv5.lrc");
 			lrcObj.fix = 35;
 			activeAudio(audio1, lrcObj);
+			
+			//当停止播放时，旋转也停止.
+			var circle = document.getElementById("circle");
+			audio1.addEventListener("pause",function(){
+				circle.style.animationPlayState = "paused";
+			});
+			audio1.addEventListener("play",function(){
+				circle.style.animationPlayState = "running";
+			});
+			
 		}
 	</script>
 	</head>
@@ -157,7 +167,7 @@
 			<div class="container">
 				<div class="img"></div>
 				<div class="lrc" id="lrc1"></div>
-				<div class="circle"></div>
+				<div class="circle" id="circle"></div>
 			</div>
 
 			<audio class="audio" controls="controls" id="audio1" autoplay="autoplay" src="music/lv5.mp3">
