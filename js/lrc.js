@@ -1,5 +1,98 @@
 ﻿(function() {
 
+	
+	//全局controller样式。
+	var controller = window.lrcCtrl = {};
+	
+	controller.active = function(p) {
+
+		p.style.fontWeight = "700";
+	}
+	
+	controller.normal = function(p) {
+		p.style.fontWeight = "normal";
+	}
+	
+	//全局fix默认配置
+	var fix = window.lrcFix = 28;
+	
+
+	
+	//歌词计时器 constructor
+	function timer(audio, lrc) {
+		this.audio = audio;
+		this.lrc = lrc.dom.getElementsByTagName("p");
+		this.dom = lrc.dom;
+		this.current = 0;
+		this.currentTime = 0;
+		this.fix = lrc.fix;
+		this.offset = parseFloat(lrc.offset == undefined ? 0 : lrc.offset);
+		
+		this.lrcobj = lrc;
+	}
+	
+	timer.prototype.active = function(p){
+		if(typeof this.lrcobj.active == "function"){
+			this.lrcobj.active(p);
+		}else if(typeof controller.active == "function"){
+			controller.active(p);
+		}
+	}
+	timer.prototype.normal = function(p){
+		if(typeof this.lrcobj.normal == "function"){
+			this.lrcobj.normal(p);
+		}else if(typeof controller.normal == "function"){
+			controller.normal(p);
+		}
+	}
+
+	timer.prototype.timeChanged = function(current) {
+
+		if (this.current == this.lrc.length) {
+			return;
+		}
+		//获取下一个歌词的时间
+		var nextTime = parseFloat(this.lrc[this.current].dataset.time) + this.offset;
+
+		if (timeAccept(current,nextTime)) {
+			this.moveNext();
+
+			this.current++;
+		}
+
+	}
+	timer.prototype.moveNext = function() {
+		var marginTop = parseInt(css(this.dom, "marginTop"));
+		if (this.current > 0) this.normal(this.lrc[this.current - 1]);
+		this.active(this.lrc[this.current]);
+		this.dom.style.marginTop = (marginTop - (this.fix != undefined ? this.fix :  fix)) + "px";
+
+	}
+
+	timer.prototype.toggle = function(time) {
+		var f = -1;
+
+		for (var i = this.lrc.length - 1; i >= 0; i--) {
+			var ptime = parseFloat(this.lrc[i].dataset.time) + this.offset;
+
+			if (f < 0 && timeAccept(time,ptime)) {
+				f = i;
+			}
+			this.normal(this.lrc[i]);
+
+		}
+
+		if (f < this.lrc.length && f > 0) {
+			var marin = 80 - (this.fix != undefined ? this.fix : fix) * f;
+			this.dom.style.marginTop = marin + "px";
+			this.current = f;
+		}
+
+	}
+	
+	
+	//utils
+	
 	function ajax_getXml(url, success) {
 		var xmlhttp;
 		if (window.XMLHttpRequest) {
@@ -35,17 +128,7 @@
 		xmlhttp.send();
 
 	}
-
-	var controller = window.lrcCtrl = {};
-
-	controller.active = function(p) {
-
-		p.style.fontWeight = "700";
-	}
-	controller.normal = function(p) {
-		p.style.fontWeight = "normal";
-	}
-
+	
 	function parseLyric(text) {
 		//这个方法是在网上找的，因为我对正则表达式不熟
 
@@ -92,77 +175,11 @@
 		return result;
 	}
 
-	//歌词计时器
-	function timer(audio, lrc) {
-		this.audio = audio;
-		this.lrc = lrc.dom.getElementsByTagName("p");
-		this.dom = lrc.dom;
-		this.current = 0;
-		this.currentTime = 0;
-		this.fix = lrc.fix;
-		this.offset = lrc.offset == undefined ? 0 : lrc.offset;
-		
-		this.lrcobj = lrc;
+	
+	function timeAccept(currentTime,nextTime){
+		return currentTime>nextTime||Math.abs(currentTime-nextTime)<=0.5
 	}
 	
-	timer.prototype.active = function(p){
-		if(typeof this.lrcobj.active == "function"){
-			this.lrcobj.active(p);
-		}else if(typeof controller.active == "function"){
-			controller.active(p);
-		}
-	}
-	timer.prototype.normal = function(p){
-		if(typeof this.lrcobj.normal == "function"){
-			this.lrcobj.normal(p);
-		}else if(typeof controller.normal == "function"){
-			controller.normal(p);
-		}
-	}
-
-	timer.prototype.timeChanged = function(current) {
-
-		if (this.current == this.lrc.length) {
-			return;
-		}
-		//获取下一个歌词的时间
-		var nextTime = parseFloat(this.lrc[this.current].dataset.time) + parseFloat(this.offset);
-
-		if (current > nextTime || Math.abs(current - nextTime) <= 0.5) {
-			this.moveNext();
-
-			this.current++;
-		}
-
-	}
-	timer.prototype.moveNext = function() {
-		var marginTop = parseInt(css(this.dom, "marginTop"));
-		if (this.current > 0) this.normal(this.lrc[this.current - 1]);
-		this.active(this.lrc[this.current]);
-		this.dom.style.marginTop = (marginTop - (this.fix != undefined ? this.fix : 28)) + "px";
-
-	}
-
-	timer.prototype.toggle = function(time) {
-		var f = -1;
-
-		for (var i = this.lrc.length - 1; i >= 0; i--) {
-			var ptime = parseFloat(this.lrc[i].dataset.time) + parseFloat(this.offset);
-
-			if (f < 0 && time > ptime || Math.abs(time - ptime) <= 0.5) {
-				f = i;
-			}
-			this.normal(this.lrc[i]);
-
-		}
-
-		if (f < this.lrc.length && f > 0) {
-			var marin = 80 - (this.fix != undefined ? this.fix : 28) * f;
-			this.dom.style.marginTop = marin + "px";
-			this.current = f;
-		}
-
-	}
 
 	//模拟jquery css方法的实现
 	function css(dom, name) {
@@ -173,6 +190,10 @@
 			return dom.currentStyle[name];
 		}
 	}
+	
+	
+	
+	// window output
 	var loadLrc = window.loadLrc = function(dom, url) {
 		this.dom = dom;
 
