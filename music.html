@@ -29,8 +29,8 @@
 			.img {
 				/*设置透明度*/
 				filter: alpha(opacity=50);
-				-moz-opacity: 0.6;
-				-khtml-opacity: 0.4;
+				-moz-opacity: 0.5;
+				-khtml-opacity: 0.5;
 				opacity: 0.5;
 				background-image: url('img/pao.png');
 				background-repeat: no-repeat;
@@ -49,14 +49,83 @@
 				color: #fff;
 				margin: 80px auto;
 				text-align: center;
-				
 			}
 			
 			.container {
 				position: relative;
 				overflow: hidden;
 			}
-			p{
+			
+			.circle {
+				position: absolute;
+				width: 80px;
+				height: 80px;
+				background-image: url(img/meimei.png);
+				background-repeat: no-repeat;
+				background-size: 100%;
+				top: 200px;
+				left: 320px;
+				border-radius: 50%;
+				border: 1px solid #cccccc;
+				filter: alpha(opacity=80);
+				-moz-opacity: 0.8;
+				-khtml-opacity: 0.8;
+				opacity: 0.8;
+				animation: circle 8s infinite linear;
+				-moz-animation:circle 8s infinite linear;
+				-webkit-animation: circle 8s infinite linear;
+				-o-animation: circle 8s infinite linear;
+			}
+			
+			@keyframes circle {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			@-moz-keyframes circle {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			@-webkit-keyframes circle {
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}
+			}
+			
+			@-o-keyframes circle{
+				0% {
+					-webkit-transform: rotate(0deg);
+				}
+				50% {
+					-webkit-transform: rotate(180deg);
+				}
+				100% {
+					-webkit-transform: rotate(360deg);
+				}				
+			}
+			
+			p {
 				height: 25px;
 				line-height: 25px;
 				margin-top: 10px;
@@ -65,36 +134,32 @@
 	</head>
 	<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		window.onload = function(){
-			
-			lrcCtrl.active = function(p){
+		window.onload = function() {
+			lrcCtrl.active = function(p) {
 				p.style.color = "rgb(166, 226, 45)"
 				p.style.fontWeight = 600;
 			}
-			lrcCtrl.normal = function(p){
+			lrcCtrl.normal = function(p) {
 				p.style.color = "white"
 				p.style.fontWeight = "";
 			}
-			
 			var lrc1 = document.getElementById("lrc1");
 			var audio1 = document.getElementById("audio1");
-			
-			var lrcObj = loadLrc(lrc1,"music/lv5.lrc");
-			lrcObj.fix =35;
-			activeAudio(audio1,lrcObj);
+			var lrcObj = loadLrc(lrc1, "music/lv5.lrc");
+			lrcObj.fix = 35;
+			activeAudio(audio1, lrcObj);
 		}
 	</script>
+
 	<body>
 		<div class="musicbox">
 			<div class="container">
 				<div class="img"></div>
-				<div class="lrc" id="lrc1">
-					
-				</div>
+				<div class="lrc" id="lrc1"></div>
+				<div class="circle"></div>
 			</div>
 
-			<audio class="audio" controls="controls" id="audio1" autoplay="autoplay"
-				src="music/lv5.mp3">
+			<audio class="audio" controls="controls" id="audio1" autoplay="autoplay" src="music/lv5.mp3">
 				
 			</audio>
 		</div>
