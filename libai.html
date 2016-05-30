@@ -38,20 +38,22 @@
 		lrcCtrl对象定义p标签的格式
 		*/
 		
-		lrcCtrl.active = function(p){
-			p.style.color = "red";
-			p.style.fontWeight="700";
-		}
-		lrcCtrl.normal = function(p){
-			p.style.color = "black";
-			p.style.fontWeight = "normal";
-		}
+		
 		
 		var lrc1 = document.getElementById("lrc1");
 		
 		var lrc = loadLrc(lrc1,"music/libai.lrc")
 		
 		lrc.fix = 30;
+		
+		lrc.active = function(p){
+			p.style.color = "red";
+			p.style.fontWeight="700";
+		}
+		lrc.normal = function(p){
+			p.style.color = "black";
+			p.style.fontWeight = "normal";
+		}
 	
 		var audio1 = document.getElementById("audio1");
 		activeAudio(audio1,lrc);

@@ -101,7 +101,23 @@
 		this.currentTime = 0;
 		this.fix = lrc.fix;
 		this.offset = lrc.offset == undefined ? 0 : lrc.offset;
-
+		
+		this.lrcobj = lrc;
+	}
+	
+	timer.prototype.active = function(p){
+		if(typeof this.lrcobj.active == "function"){
+			this.lrcobj.active(p);
+		}else if(typeof controller.active == "function"){
+			controller.active(p);
+		}
+	}
+	timer.prototype.normal = function(p){
+		if(typeof this.lrcobj.normal == "function"){
+			this.lrcobj.normal(p);
+		}else if(typeof controller.normal == "function"){
+			controller.normal(p);
+		}
 	}
 
 	timer.prototype.timeChanged = function(current) {
@@ -121,8 +137,8 @@
 	}
 	timer.prototype.moveNext = function() {
 		var marginTop = parseInt(css(this.dom, "marginTop"));
-		if (this.current > 0) controller.normal(this.lrc[this.current - 1]);
-		controller.active(this.lrc[this.current]);
+		if (this.current > 0) this.normal(this.lrc[this.current - 1]);
+		this.active(this.lrc[this.current]);
 		this.dom.style.marginTop = (marginTop - (this.fix != undefined ? this.fix : 28)) + "px";
 
 	}
@@ -136,7 +152,7 @@
 			if (f < 0 && time > ptime || Math.abs(time - ptime) <= 0.5) {
 				f = i;
 			}
-			controller.normal(this.lrc[i]);
+			this.normal(this.lrc[i]);
 
 		}
 
