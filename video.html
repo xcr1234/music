@@ -6,7 +6,6 @@
 		<title>九九八十一</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 		<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			p{
 				height: 22px;
@@ -28,20 +27,13 @@
 	</body>
 	<script type="text/javascript">
 		lrcCtrl.active = function(p){
-			$(p).css({
-				"background-color":"#4A182F",
-				"color":"white",
-				
-			});
+			p.style.backgroundColor = "#4A182F";
+			p.style.color = "white";
 		}
 	
 		lrcCtrl.normal = function(p){
-			$(p).css({
-				"background-color":"",
-				"color":"",
-				
-				
-			});
+			p.style.backgroundColor = "";
+			p.style.color = "";
 		
 		}
 	
