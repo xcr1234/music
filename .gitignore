@@ -1,3 +1,7 @@
+#ignore hbuilder .project
+.project
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
