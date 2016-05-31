@@ -75,6 +75,8 @@
 				-moz-animation:circle 8s infinite linear;
 				-webkit-animation: circle 8s infinite linear;
 				-o-animation: circle 8s infinite linear;
+				
+				cursor: pointer;
 			}
 			
 			@keyframes circle {
@@ -156,6 +158,14 @@
 			audio1.addEventListener("play",function(){
 				circle.style.animationPlayState = "running";
 			});
+			
+			circle.onclick = function(){
+				if(audio1.paused){
+					audio1.play();
+				}else{
+					audio1.pause();
+				}
+			}
 			
 		}
 	</script>
