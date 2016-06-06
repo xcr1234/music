@@ -215,7 +215,7 @@
 	//模拟jquery data方法的实现
 	//因为虽然ie9支持html5的audio，但不支持dataset
 	function data(dom,name,value){
-		if(document.createElement("a").dataset){
+		if(dom.dataset){
 			if(value==undefined){
 				return dom.dataset[name];
 			}else{
