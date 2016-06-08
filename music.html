@@ -134,8 +134,25 @@
 			}
 		</style>
 		<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
+	
+	</head>
+	
+
+	<body>
+		<div class="musicbox">
+			<div class="container">
+				<div class="img"></div>
+				<div class="lrc" id="lrc1"></div>
+				<div class="circle" id="circle"></div>
+			</div>
+
+			<audio class="audio" controls="controls" id="audio1" autoplay="autoplay" src="http://7fvf6a.com1.z0.glb.clouddn.com/lv5.mp3">
+				
+			</audio>
+		</div>
+	</body>
 	<script type="text/javascript">
-		window.onload = function() {
+		
 			lrcCtrl.active = function(p) {
 				p.style.color = "rgb(166, 226, 45)"
 				p.style.fontWeight = 600;
@@ -167,23 +184,7 @@
 				}
 			}
 			
-		}
+		
 	</script>
-	</head>
-	
-
-	<body>
-		<div class="musicbox">
-			<div class="container">
-				<div class="img"></div>
-				<div class="lrc" id="lrc1"></div>
-				<div class="circle" id="circle"></div>
-			</div>
-
-			<audio class="audio" controls="controls" id="audio1" autoplay="autoplay" src="http://7fvf6a.com1.z0.glb.clouddn.com/lv5.mp3">
-				
-			</audio>
-		</div>
-	</body>
 
 </html>
