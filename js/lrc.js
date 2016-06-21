@@ -52,15 +52,17 @@
 	if(window.jQuery){
 		$.fn.extend({
 			loadLrc:function(src){
-				return window.loadLrc(this,src);
+				return window.loadLrc(this[0],src);
 				
 			},
 			activeAudio:function(lrcObj){
-				return window.activeAudio(this,lrcObj);
+				return window.activeAudio(this[0],lrcObj);
 			},
 			lrc:function(src,audio){
-				var obj = window.loadLrc(this,src);
+				
+				var obj = window.loadLrc(this[0],src);
 				if(audio instanceof jQuery){
+					
 					window.activeAudio(audio[0],obj);
 				}else{
 					window.activeAudio(audio,obj);
@@ -70,6 +72,8 @@
 			}
 			
 		});
+		
+		
 		
 		
 		
@@ -100,6 +104,8 @@
 	controller.normal = function(p) {
 		p.style.fontWeight = "normal";
 	}
+	
+	$.lrcCtrl = window.lrcCtrl;
 
 	//全局fix默认配置
 	var fix = window.lrcFix = 28;

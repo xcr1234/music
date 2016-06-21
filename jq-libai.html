@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>李白</title>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+
+				$.lrcCtrl.active = function(p) {
+
+					p.style.color = "red";
+					p.style.fontWeight = 700;
+				}
+				$.lrcCtrl.normal = function(p) {
+					p.style.color = "black";
+					p.style.fontWeight = "normal";
+				}
+
+				$("#lrc1").lrc("music/libai.lrc", $("#audio1"));
+
+			});
+		</script>
+
+	</head>
+
+	<body>
+		<audio controls="controls" id="audio1" src="http://7fvf6a.com1.z0.glb.clouddn.com/%E6%9D%8E%E7%99%BD.mp3" autoplay="autoplay">
+			你的浏览器不支持html5!
+		</audio>
+		<div class="container">
+			<div class="lrc" id="lrc1">
+
+			</div>
+
+		</div>
+	</body>
+
+</html>
