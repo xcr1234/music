@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function(window,document) {
 	
 	var myJq= function(dom){
 		
@@ -48,6 +48,32 @@
 	myJq.extend = myJq().extend;
 	
 	var $ = window.jQuery?window.jQuery:myJq;
+	
+	if(window.jQuery){
+		$.fn.extend({
+			loadLrc:function(src){
+				return window.loadLrc(this,src);
+				
+			},
+			activeAudio:function(lrcObj){
+				return window.activeAudio(this,lrcObj);
+			},
+			lrc:function(src,audio){
+				var obj = window.loadLrc(this,src);
+				if(audio instanceof jQuery){
+					window.activeAudio(audio[0],obj);
+				}else{
+					window.activeAudio(audio,obj);
+				}
+				
+				
+			}
+			
+		});
+		
+		
+		
+	}
 	
 	
 
@@ -338,4 +364,4 @@
 		})
 
 	}
-})();
+})(window,document);
