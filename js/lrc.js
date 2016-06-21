@@ -1,7 +1,70 @@
 ﻿(function() {
+	
+	var myJq= function(dom){
+		
+		return new myJq.fn.init(dom);
+	}
+	myJq.fn = myJq.prototype = {
+		init:function(dom){
+			this.dom = dom;
+		},
+		css:function(name){
+			var dom = this.dom;
+			if (!(typeof window.getComputedStyle == "undefined")) {
+				return window.getComputedStyle(dom, null)[name];
+			} else {
+				return dom.currentStyle[name];
+			}
+		},
+		data:function(name,value){
+			var dom = this.dom;
+			if(dom.dataset){
+				if(value==undefined){
+					return dom.dataset[name];
+				}else{
+					return dom.dataset[name]=value;
+				}
+			
+			}else{
+				var attr = "data-"+name;
+				if(value==undefined){
+					return dom.getAttribute(attr);
+				}else{
+					return dom.setAttribute(attr,value);
+				}
+			}
+		},
+		extend:function(target, options){
+			
+			for (name in options) {  
+            	target[name] = options[name];  
+        	}  
+        	return target;  
+		}
+		
+	};
+	myJq.fn.init.prototype = myJq.fn;
+	
+	myJq.extend = myJq().extend;
+	
+	var $ = window.jQuery?window.jQuery:myJq;
+	
+	
 
 	//全局controller样式。
 	var controller = window.lrcCtrl = {};
+	
+	var options = {
+		active:function(p){
+			p.style.fontWeight = "700";
+		},
+		normal:function(p){
+			p.style.fontWeight = "normal";
+		},
+		fix:28,
+		initMargin:80,
+		offset:0
+	};
 
 	controller.active = function(p) {
 
@@ -22,10 +85,18 @@
 		this.dom = lrc.dom;
 		this.current = 0;
 		this.currentTime = 0;
-		this.fix = lrc.fix;
-		this.offset = parseFloat(lrc.offset == undefined ? 0 : lrc.offset);
+		
+		
+		this.options = $.extend(options,controller);
+		if(lrc.fix){
+			this.options.fix = lrc.fix;
+		}
+		
+		
 
 		this.lrcobj = lrc;
+		
+		
 	}
 
 	timer.prototype.active = function(p) {
@@ -49,7 +120,7 @@
 			return;
 		}
 		//获取下一个歌词的时间
-		var nextTime = parseFloat(data(this.lrc[this.current],"time")) + this.offset;
+		var nextTime = parseFloat($(this.lrc[this.current]).data("time")) + this.options.offset;
 
 		if (timeAccept(current, nextTime)) {
 			this.moveNext();
@@ -59,10 +130,10 @@
 
 	}
 	timer.prototype.moveNext = function() {
-		var marginTop = parseInt(css(this.dom, "marginTop"));
+		var marginTop = parseInt($(this.dom).css("marginTop"));
 		if (this.current > 0) this.normal(this.lrc[this.current - 1]);
 		this.active(this.lrc[this.current]);
-		this.dom.style.marginTop = (marginTop - (this.fix != undefined ? this.fix : fix)) + "px";
+		this.dom.style.marginTop = (marginTop - this.options.fix) + "px";
 
 	}
 
@@ -70,7 +141,7 @@
 		var f = -1;
 
 		for (var i = this.lrc.length - 1; i >= 0; i--) {
-			var ptime = parseFloat(data(this.lrc[i],"time")) + this.offset;
+			var ptime = parseFloat($(this.lrc[i]).data("time")) + this.offset;
 
 			if (f < 0 && timeAccept(time, ptime)) {
 				f = i;
@@ -80,7 +151,7 @@
 		}
 
 		if (f < this.lrc.length && f > 0) {
-			var marin = 80 - (this.fix != undefined ? this.fix : fix) * f;
+			var marin = this.options.initMargin - this.options.fix * f;
 			this.dom.style.marginTop = marin + "px";
 			this.current = f;
 		}
@@ -88,6 +159,10 @@
 	}
 
 	//utils
+	
+	
+	
+	
 
 	//兼容ie浏览器不支持array.foreach方法
 	//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
@@ -202,16 +277,9 @@
 	function timeAccept(currentTime, nextTime) {
 		return currentTime > nextTime || Math.abs(currentTime - nextTime) <= 0.5
 	}
-
-	//模拟jquery css方法的实现
-	function css(dom, name) {
-		if (!(typeof window.getComputedStyle == "undefined")) {
-			return window.getComputedStyle(dom, null)[name];
-
-		} else {
-			return dom.currentStyle[name];
-		}
-	}
+	
+	
+		
 	//模拟jquery data方法的实现
 	//因为虽然ie9支持html5的audio，但不支持dataset
 	function data(dom,name,value){
@@ -231,6 +299,11 @@
 			}
 		}
 	}
+	
+	
+	
+	
+	
 
 	// window output
 	var loadLrc = window.loadLrc = function(dom, url) {
