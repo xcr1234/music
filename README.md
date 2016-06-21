@@ -18,3 +18,6 @@ fix属性是行距离,比如p标签的height是15px，margin-top:15px。
 那么fix就是30。
 
 active/normal支持全局/局部配置，实例见libal.html和music.html
+
+!支持jQuery
+见例子jq-libai.html
