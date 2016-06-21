@@ -61,12 +61,10 @@
 			lrc:function(src,audio){
 				
 				var obj = window.loadLrc(this[0],src);
-				if(audio instanceof jQuery){
-					
-					window.activeAudio(audio[0],obj);
-				}else{
-					window.activeAudio(audio,obj);
-				}
+				var audioObj = $(audio);
+				
+				window.activeAudio(audioObj[0],obj);
+				
 				
 				
 			}
