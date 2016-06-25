@@ -11,13 +11,19 @@
 			$(function() {
 
 				$.lrcCtrl.active = function(p) {
+					
+					$(p).css({
+						color:"red",
+						fontWeight:700
+					});
 
-					p.style.color = "red";
-					p.style.fontWeight = 700;
+					
 				}
 				$.lrcCtrl.normal = function(p) {
-					p.style.color = "black";
-					p.style.fontWeight = "normal";
+					$(p).css({
+						color:"black",
+						fontWeight:"normal"
+					});
 				}
 
 				$("#lrc1").lrc("music/libai.lrc", "#audio1");

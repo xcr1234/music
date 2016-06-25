@@ -46,7 +46,7 @@
 	};
 	myJq.fn.init.prototype = myJq.fn;
 
-	myJq.extend = myJq().extend;
+	myJq.extend = myJq.fn.extend;
 
 	myJq.get = function(url, data, success) {
 
@@ -302,26 +302,7 @@
 		return currentTime > nextTime || Math.abs(currentTime - nextTime) <= 0.5
 	}
 
-	//模拟jquery data方法的实现
-	//因为虽然ie9支持html5的audio，但不支持dataset
-	function data(dom, name, value) {
-		if (dom.dataset) {
-			if (value == undefined) {
-				return dom.dataset[name];
-			} else {
-				return dom.dataset[name] = value;
-			}
-
-		} else {
-			var attr = "data-" + name;
-			if (value == undefined) {
-				return dom.getAttribute(attr);
-			} else {
-				return dom.setAttribute(attr, value);
-			}
-		}
-	}
-
+	
 	// window output
 	var loadLrc = window.loadLrc = function(dom, url) {
 		this.dom = dom;
@@ -333,7 +314,7 @@
 				var lry = arr[i];
 				var p = document.createElement("p");
 
-				data(p, "time", lry[0]);
+				$(p).data("time", lry[0]);
 				p.innerHTML = lry[1];
 				dom.appendChild(p);
 			}
