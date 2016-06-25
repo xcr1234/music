@@ -1,9 +1,9 @@
-﻿(function(window, document) {
+﻿;(function(window, document) {
 
 	var myJq = function(dom) {
 
 		return new myJq.fn.init(dom);
-	}
+	};
 	myJq.fn = myJq.prototype = {
 		init: function(dom) {
 			this.dom = dom;
@@ -79,7 +79,7 @@
 
 		xmlHttp.send();
 
-	}
+	};
 
 	var $ = window.jQuery ? window.jQuery : myJq;
 
@@ -123,11 +123,11 @@
 	controller.active = function(p) {
 
 		p.style.fontWeight = "700";
-	}
+	};
 
 	controller.normal = function(p) {
 		p.style.fontWeight = "normal";
-	}
+	};
 
 	$.lrcCtrl = window.lrcCtrl;
 
@@ -152,7 +152,7 @@
 
 		this.lrcobj = lrc;
 
-	}
+	};
 
 	timer.prototype.active = function(p) {
 		if (typeof this.lrcobj.active == "function") {
@@ -160,14 +160,14 @@
 		} else if (typeof controller.active == "function") {
 			controller.active(p);
 		}
-	}
+	};
 	timer.prototype.normal = function(p) {
 		if (typeof this.lrcobj.normal == "function") {
 			this.lrcobj.normal(p);
 		} else if (typeof controller.normal == "function") {
 			controller.normal(p);
 		}
-	}
+	};
 
 	timer.prototype.timeChanged = function(current) {
 
@@ -183,14 +183,14 @@
 			this.current++;
 		}
 
-	}
+	};
 	timer.prototype.moveNext = function() {
 		var marginTop = parseInt($(this.dom).css("marginTop"));
 		if (this.current > 0) this.normal(this.lrc[this.current - 1]);
 		this.active(this.lrc[this.current]);
 		this.dom.style.marginTop = (marginTop - this.options.fix) + "px";
 
-	}
+	};
 
 	timer.prototype.toggle = function(time) {
 		var f = -1;
@@ -211,7 +211,7 @@
 			this.current = f;
 		}
 
-	}
+	};
 
 	//utils
 
@@ -249,7 +249,7 @@
 				k++;
 			}
 
-		}
+		};
 
 	}
 
@@ -321,7 +321,7 @@
 		});
 		return this;
 
-	}
+	};
 
 	var aa = window.activeAudio = function(audio, lrc) {
 		var t = new timer(audio, lrc);
@@ -329,11 +329,11 @@
 		audio.addEventListener("timeupdate", function() {
 			t.timeChanged(this.currentTime);
 
-		})
+		});
 
 		audio.addEventListener("seeked", function() {
 			t.toggle(this.currentTime);
-		})
+		});
 
-	}
+	};
 })(window, window.document);
