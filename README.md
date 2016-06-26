@@ -1,23 +1,108 @@
-没有用到jQuery,纯js实现，只有2个方法。
+# Audio音乐歌词滚动显示 Javascript插件
 
-支持播放/暂停/继续
+by : author:xcr1234 / QQ 530551426
 
-var lrc = loadLrc(DOM对象,lrc歌词文件路径) 
+**为HTML5 Audio标签的音乐播放、歌词滚动提供解决方案，兼容、扩充但不依赖于jQuery库.**
 
-//动态加载.lrc文件，并解析 返回lryic对象，要求支持ajax.
+##1.在Web项目中引入js。
 
-activeAudio(audio对象,lrc)
+从github或coding上克隆源码
 
-//关联audio对象和lyric对象。
+`git clone https://github.com/xcr1234/music.git`
 
-请放到tomcat这样的服务器测试，不要用Hbuilder自带的服务器测试了
+或者
 
-太垃圾！
+`git clone https://git.coding.net/xcr_abcd/music.git`
 
-fix属性是行距离,比如p标签的height是15px，margin-top:15px。
-那么fix就是30。
 
-active/normal支持全局/局部配置，实例见libal.html和music.html
+在网页中，添加对lrc.js文件的引用
 
-!支持jQuery
-见例子jq-libai.html
+`<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>`
+
+__使用jQuery插件开发（可选)__
+
+本插件也可以作为jQuery的插件开发，只需在引入lrc.js之前引入jQuery库即可。
+
+
+```html
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.js"></script>
+<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
+```
+##2.创建html标签
+
+在页面中，创建以下标签：
+```html
+<audio src="xxx.mp3">
+	你的浏览器不支持audio标签!
+</audio>
+<div id="container" style="overflow: hidden;">
+	<div id="lrc"></div>
+</div>
+```
+
+\#lrc是歌词的容器，歌词会以p标签形式显示在该div中。
+\#container是lrc div的父容器，要求有overflow:hidden属性，因为在播放中，lrc的margin-top会发生变化从而达到歌词滚动的效果。
+
+##3.动态加载lyric歌词文件。
+
+支持标准格式的.lrc加载（ajax）并解析。
+
+```javascript
+var lrc1 = document.getElementById("lrc1");
+var lrc = loadLrc(lrc1,"music/libai.lrc"); //该方法返回lyrics对象。
+
+```
+
+##4.关联lyrics对象与audio标签
+
+```javascript
+var audio1 = document.getElementById("audio1");
+activeAudio(audio1,lrc);
+```
+
+##5.jQuery模式开发
+
+```javascript
+$(function() {
+
+				$.lrcCtrl.active = function(p) {
+					
+					$(p).css({
+						color:"red",
+						fontWeight:700
+					});
+
+					
+				}
+				$.lrcCtrl.normal = function(p) {
+					$(p).css({
+						color:"black",
+						fontWeight:"normal"
+					});
+				}
+
+				$("#lrc1").lrc("music/libai.lrc", "#audio1");
+
+			});
+```
+
+##6.更多实例
+
+
+
+[lelvel5.mp3](music.html) **精美的音乐盒效果实例（推荐）**
+
+
+[李白.mp3](libai.html)  
+
+[九九八十一.mp3](81.html)  
+
+video api实例
+
+[九九八十一mv.mp4](video.html)
+
+jquery api实例
+
+[李白.mp3](jq-libai.html)
+
+

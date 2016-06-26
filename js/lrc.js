@@ -316,6 +316,7 @@
 
 				$(p).data("time", lry[0]);
 				p.innerHTML = lry[1];
+				p.style.overflow="hidden";
 				dom.appendChild(p);
 			}
 		});
