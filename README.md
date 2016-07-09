@@ -90,19 +90,19 @@ $(function() {
 
 
 
-[lelvel5.mp3](music.html) **精美的音乐盒效果实例（推荐）**
+[lelvel5.mp3](http://xcr_abcd.coding.me/music/music.html) **精美的音乐盒效果实例（推荐）**  
 
 
-[李白.mp3](libai.html)  
+[李白.mp3](http://xcr_abcd.coding.me/music/libai.html)  
 
-[九九八十一.mp3](81.html)  
+[九九八十一.mp3](http://xcr_abcd.coding.me/music/81.html)  
 
 video api实例
 
-[九九八十一mv.mp4](video.html)
+[九九八十一mv.mp4](http://xcr_abcd.coding.me/music/video.html)  
 
 jquery api实例
 
-[李白.mp3](jq-libai.html)
+[李白.mp3](http://xcr_abcd.coding.me/music/jq-libai.html)  
 
 
