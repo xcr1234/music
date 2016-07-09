@@ -196,7 +196,7 @@
 		var f = -1;
 
 		for (var i = this.lrc.length - 1; i >= 0; i--) {
-			var ptime = parseFloat($(this.lrc[i]).data("time")) + this.offset;
+			var ptime = parseFloat($(this.lrc[i]).data("time")) + this.options.offset;
 
 			if (f < 0 && timeAccept(time, ptime)) {
 				f = i;

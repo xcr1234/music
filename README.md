@@ -2,13 +2,19 @@
 
 by : author:xcr1234 / QQ 530551426
 
+__由于中国地区访问github的网速问题不稳定，该项目在github上我将停止更新，请移步到coding.net。__  
+__同时我的其他项目会在github上继续更新__  
+请访问：https://git.coding.net/xcr_abcd/music.git  
+
+版本号：v16.0709  
+
 **为HTML5 Audio标签的音乐播放、歌词滚动提供解决方案，兼容、扩充但不依赖于jQuery库.**
 
 ##1.在Web项目中引入js。
 
 从github或coding上克隆源码
 
-`git clone https://github.com/xcr1234/music.git`
+~~`git clone https://github.com/xcr1234/music.git`~~
 
 或者
 
@@ -104,5 +110,12 @@ video api实例
 jquery api实例
 
 [李白.mp3](http://xcr_abcd.coding.me/music/jq-libai.html)  
+
+
+###7.浏览器支持
+
+支持所有主流浏览器，Chrome/Firefox/Safari。具体版本暂时未测试。  
+
+ie浏览器支持：支持ie9及以上版本。由于ie8不支持html5的audio，故未兼容ie8。
 
 
