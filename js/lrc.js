@@ -2,7 +2,7 @@
 * Audio lyric
 * Audio音乐歌词滚动显示 Javascript插件
 * git:https://git.coding.net/xcr_abcd/music.git
-* 版本号：v16.0709
+* 版本号：v16.0722
 */
 ;(function(window, document) {
 
