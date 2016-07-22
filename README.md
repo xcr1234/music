@@ -144,4 +144,6 @@ ps:bsie=鄙视ie
 </div>
 ```  
 
-另外，如果你的项目没有ie浏览器兼容方面的要求，也可以检出标签16.0709。
+另外，如果你的项目没有ie浏览器兼容方面的要求，也可以使用标签16.0709。  
+
+https://coding.net/u/xcr_abcd/p/music/git/tree/release-16.0709
