@@ -301,6 +301,58 @@
 	function timeAccept(currentTime, nextTime) {
 		return currentTime > nextTime || Math.abs(currentTime - nextTime) <= 0.5
 	}
+	
+	//audio provider
+	//如果浏览器支持audio，则provider为html5Audio，否则为AudioJs。
+	//在window.activeAudio中使用provider.
+	
+	
+	
+	function Html5Audio(dom,timeupdate,seeked){
+		this.dom = dom;		
+		if(typeof timeupdate=="function"){
+			dom.addEventListener("timeupdate",function(){
+				timeupdate(this.currentTime);
+			})
+		}
+		if(typeof seeked == "function"){
+			dom.addEventListener("seeked",function(){
+				seeked(this.currentTime);
+			});
+		}
+	}
+	
+	
+	function AudioJs(dom,timeupdate,seeked){
+		
+		if(typeof window.audiojs != "object"&& typeof window.audiojs.events!="object"){
+			throw new ReferenceError("audiojs is not correctly defined!");
+		}
+		
+		audiojs.events.ready(function(){
+			
+			var player = audiojs.create(dom,{
+				updatePlayhead:function(percent){
+					if(typeof timeupdate=="function"){
+						
+						timeupdate(player.duration*percent);
+					}
+				},
+				skipTo:function(percent){
+					if(typeof seeked=="function"){
+						seeked(player.duration*percent);
+					}
+				}
+			});
+			
+		});
+		
+	}
+	
+	
+	
+	
+	
 
 	
 	// window output
@@ -326,15 +378,18 @@
 
 	var aa = window.activeAudio = function(audio, lrc) {
 		var t = new timer(audio, lrc);
-
-		audio.addEventListener("timeupdate", function() {
-			t.timeChanged(this.currentTime);
-
+		var provider = undefined;
+		if(window.Audio){
+			provider = Html5Audio;
+		}else{
+			provider = AudioJs;
+		}
+		
+		provider(audio,function(currentTime){
+			t.timeChanged(currentTime);
+		},function(currentTime){
+			t.toggle(currentTime);
 		});
-
-		audio.addEventListener("seeked", function() {
-			t.toggle(this.currentTime);
-		});
-
+	
 	};
 })(window, window.document);

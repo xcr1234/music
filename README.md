@@ -6,7 +6,7 @@ __由于中国地区访问github的网速问题不稳定，该项目在github上
 __同时我的其他项目会在github上继续更新__  
 请访问：https://git.coding.net/xcr_abcd/music.git  
 
-版本号：v16.0709  
+版本号：v16.0722  
 
 **为HTML5 Audio标签的音乐播放、歌词滚动提供解决方案，兼容、扩充但不依赖于jQuery库.**
 
@@ -116,6 +116,33 @@ jquery api实例
 
 支持所有主流浏览器，Chrome/Firefox/Safari。具体版本暂时未测试。  
 
-ie浏览器支持：支持ie9及以上版本。由于ie8不支持html5的audio，故未兼容ie8。
+ie浏览器支持：  
+  
+[新]支持ie5及以上版本！
+
+###8.支持ie浏览器
+
+虽然ie8及以下浏览器不支持原生audio标签，但使用flash技术便可以支持audio标签的音频播放。
+
+首先，你需要在引入lrc.js之前，引入audio.js（或者引入audio.min.js，它们在bsie目录下）。  
+ps:bsie=鄙视ie    
+
+```html
+	<script src="bsie/audio.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
+```
+  
+然后，你可以像平常使用audio标签一样使用它们，例子见ie_libal.html。  
+
+```html 
+<audio controls="controls" id="audio1" src="http://7fvf6a.com1.z0.glb.clouddn.com/%E6%9D%8E%E7%99%BD.mp3" autoplay="autoplay"></audio>
+		<div class="container">
+			<div class="lrc" id="lrc1">
+
+			</div>
+
+</div>
+```
+
 
 
