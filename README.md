@@ -124,7 +124,22 @@ ie浏览器支持：
 
 ###8.支持ie浏览器
 
-虽然ie8及以下浏览器不支持原生audio标签，但使用flash技术便可以支持audio标签的音频播放。
+虽然ie8及以下浏览器不支持原生audio标签，但使用flash技术便可以支持audio标签的音频播放。  
+
+audio.js是github上一个优秀的开源项目，它是款小巧的音乐播放器库，支持下拉式播放列表，最主要的是它可以在任何地方使用最新的HTML5中的audio标签来调用音乐文件并输出，而且兼容性也非常不错。    
+
+官网：http://kolber.github.io/audiojs/
+
+音乐文件并输出，而且兼容性也非常不错，完美通过下面的各大浏览器列表：  
+1、Mobile Safari (iOS 3+)  
+2、Android (2.2+, w/Flash)  
+3、Safari (4+)  
+4、Chrome (7+)  
+5、Firefox (3+, w/ Flash)  
+6、Opera (10+, w/ Flash)  
+7、IE (6, 7, 8, w/ Flash)  
+
+不过需要注意的是，目前主要只支持mp3格式，不支持ogg格式。
 
 首先，你需要在引入lrc.js之前，引入audio.js（或者引入audio.min.js，它们在bsie目录下）。  
 ps:bsie=鄙视ie    
@@ -137,13 +152,14 @@ ps:bsie=鄙视ie
 然后，你可以像平常使用audio标签一样使用它们，例子见ie_libal.html。  
 
 ```html 
-<audio controls="controls" id="audio1" src="http://7fvf6a.com1.z0.glb.clouddn.com/%E6%9D%8E%E7%99%BD.mp3" autoplay="autoplay"></audio>
-		<div class="container">
-			<div class="lrc" id="lrc1">
+    <audio controls="controls" id="audio1" src="" autoplay="autoplay">
+    </audio>
+	<div class="container">
+		<div class="lrc" id="lrc1">
 
-			</div>
+		</div>
 
-</div>
+    </div>
 ```  
 
 另外，如果你的项目没有ie浏览器兼容方面的要求，也可以使用标签16.0709。  
