@@ -141,7 +141,7 @@ audio.js是github上一个优秀的开源项目，它是款小巧的音乐播放
 
 不过需要注意的是，目前主要只支持mp3格式，不支持ogg格式。
 
-首先，你需要在引入lrc.js之前，引入audio.js（或者引入audio.min.js，它们在bsie目录下）。  
+本插件已经集成了audio.js，它们在bsie目录中。首先，你需要在引入lrc.js之前，引入audio.js（或者引入audio.min.js）。  
 ps:bsie=鄙视ie    
 
 ```html
