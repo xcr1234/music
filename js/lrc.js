@@ -122,7 +122,7 @@
 			p.style.fontWeight = "normal";
 		},
 		fix: 28,
-		initMargin: 80,
+		initMargin: null,
 		offset: 0
 	};
 
@@ -154,6 +154,11 @@
 		}
 		if (lrc.fix != undefined) {
 			this.options.fix = lrc.fix;
+		}
+		
+		if(this.options.initMagin==null){
+			this.options.initMagin = $(this.dom).css("marginTop");
+			
 		}
 
 		this.lrcobj = lrc;
