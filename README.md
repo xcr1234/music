@@ -6,7 +6,7 @@ __由于中国地区访问github的网速问题不稳定，该项目在github上
 __同时我的其他项目会在github上继续更新__  
 请访问：https://git.coding.net/xcr_abcd/music.git  
 
-版本号：v16.0722   
+版本号：v16.0724   
 
 **为HTML5 Audio标签的音乐播放、歌词滚动提供解决方案，兼容、扩充但不依赖于jQuery库.**
 
