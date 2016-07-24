@@ -4,46 +4,77 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>九九八十一</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
-		
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			video {
+				float: left;
+				width: 600px;
+				height: 330px;
+			}
+			
+			.container {
+				width: 230px;
+				float: left;
+				height: 330px;
+				background-color: #303030;
+				margin-bottom: 280px;
+				color:#fff
+				
+			}
+			
+			.main{
+				margin: 80px auto;
+				width: 850px;
+			}
+			p{
+				margin: 14px;
+			}
+			body{
+				background-color: #F1F2F3;
+			}
+		</style>
 	</head>
 
 	<body>
-		
-		
-		<video src="http://7fvf6a.com1.z0.glb.clouddn.com/99.mp4" autoplay="autoplay" controls="controls" id="video1"></video>
-		<div class="container" style="width: 230px;display: inline-block;background-color: rgba(234, 234, 227, 0.5);margin-bottom: 280px;">
-			<div class="lrc" id="lrc1">
+
+		<div class="main">
+			<video src="http://7fvf6a.com1.z0.glb.clouddn.com/99.mp4" autoplay="autoplay" controls="controls" id="video1"></video>
+			<div class="container" style="">
+				<div class="lrc" id="lrc1">
+
+				</div>
 
 			</div>
-
 		</div>
 	</body>
 	<script type="text/javascript">
-		lrcCtrl.active = function(p){
-			p.style.backgroundColor = "#4A182F";
-			p.style.color = "white";
+		lrcCtrl.active = function(p) {
+			
+			p.style.color = "#FFDBEB";
 		}
-	
-		lrcCtrl.normal = function(p){
-			p.style.backgroundColor = "";
-			p.style.color = "";
+
+		lrcCtrl.normal = function(p) {
 		
+			p.style.color = "#fff";
+
 		}
-	
+
 		var video1 = document.getElementById("video1");
 		var lrc1 = document.getElementById("lrc1");
-		var lrc = loadLrc(lrc1,"music/九九八十一.lrc");
-		lrc.offset =6.5;
+		var lrc = loadLrc(lrc1, "music/九九八十一.lrc");
+		lrc.offset = 6.5;
 		lrc.fix = 30;
-		activeAudio(video1,lrc);
-		
+		activeAudio(video1, lrc);
+
 		/*
 		这个视频跟原版的歌词有6.5秒的延迟，故需要设置
         	lrc.offset属性。
 		 */
-		
 	</script>
 
 </html>

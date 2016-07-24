@@ -4,7 +4,7 @@
 * git:https://git.coding.net/xcr_abcd/music.git
 * 版本号：v16.0722
 */
-;(function(window, document) {
+;(function(window, document,undefined) {
 
 	var myJq = function(dom) {
 
@@ -384,12 +384,8 @@
 
 	var aa = window.activeAudio = function(audio, lrc) {
 		var t = new timer(audio, lrc);
-		var provider = undefined;
-		if(window.Audio){
-			provider = Html5Audio;
-		}else{
-			provider = AudioJs;
-		}
+		var provider = window.Audio?Html5Audio:AudioJs;
+		
 		
 		provider(audio,function(currentTime){
 			t.timeChanged(currentTime);
