@@ -156,8 +156,8 @@
 			this.options.fix = lrc.fix;
 		}
 		
-		if(this.options.initMagin==null){
-			this.options.initMagin = $(this.dom).css("marginTop");
+		if(this.options.initMargin==null){
+			this.options.initMargin = parseInt($(this.dom).css("marginTop"));
 			
 		}
 
@@ -218,6 +218,7 @@
 
 		if (f < this.lrc.length && f > 0) {
 			var marin = this.options.initMargin - this.options.fix * f;
+			
 			this.dom.style.marginTop = marin + "px";
 			this.current = f;
 		}

@@ -5,7 +5,23 @@
 		<meta charset="UTF-8">
 		<title>李白</title>
 		<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
+				<style>
+		.container {
+			width: 300px;
+			height: 280px;
+			border: 1px solid red;
+			overflow: hidden;
+		}
+	
+		.lrc {
+			margin-top: 80px; /*这里的margin-top可以修改来改变歌词的初始位置*/
+		}
+	
+		.lrc p {
+			text-align: center;
+			font-size: 14px;
+		}
+		</style>
 		<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function() {

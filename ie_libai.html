@@ -4,7 +4,23 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>js音乐播放--请在ie8及以下浏览器测试</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+				<style>
+		.container {
+			width: 300px;
+			height: 280px;
+			border: 1px solid red;
+			overflow: hidden;
+		}
+	
+		.lrc {
+			margin-top: 80px; /*这里的margin-top可以修改来改变歌词的初始位置*/
+		}
+	
+		.lrc p {
+			text-align: center;
+			font-size: 14px;
+		}
+		</style>
 		<script src="bsie/audio.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/lrc.js" type="text/javascript" charset="utf-8"></script>
 	</head>
@@ -20,21 +36,7 @@
 
 	</body>
 	<script type="text/javascript">
-		/*说明
-		没有用到jQuery,纯js实现，只有2个方法。
-		支持播放/暂停/继续/拖动进度
-		
-		var lrc = loadLrc(DOM对象,lrc歌词文件路径) 
-		//动态加载.lrc文件，并解析 返回lryic对象，要求支持ajax.
-		
-		activeAudio(audio对象,lrc)
-		//关联audio dom对象和lyric对象。
-		
-		请放到tomcat这样的服务器测试，不要用Hbuilder自带的服务器测试了
-		太垃圾！
-		
-		lrcCtrl对象定义p标签的格式
-		*/
+	
 		
 		
 		
