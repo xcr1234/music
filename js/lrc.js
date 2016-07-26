@@ -2,7 +2,7 @@
 * Audio lyric
 * Audio音乐歌词滚动显示 Javascript插件
 * git:https://git.coding.net/xcr_abcd/music.git
-* 版本号：v16.0724
+* 版本号：v16.0726
 */
 ;(function(window, document,undefined) {
 
@@ -323,14 +323,14 @@
 	function Html5Audio(dom,timeupdate,seeked){
 		this.dom = dom;		
 		if(typeof timeupdate=="function"){
-			dom.addEventListener("timeupdate",function(){
+			dom.ontimeupdate = function(){
 				timeupdate(this.currentTime);
-			})
+			}
 		}
 		if(typeof seeked == "function"){
-			dom.addEventListener("seeked",function(){
+			dom.onseeked=function(){
 				seeked(this.currentTime);
-			});
+			};
 		}
 	}
 	
@@ -370,10 +370,10 @@
 	// window output
 	var loadLrc = window.loadLrc = function(dom, url) {
 		this.dom = dom;
-
-		//解析lrc格式的lrc文件。
-		$.get(url, undefined, function(d) {
-			var arr = parseLyric(d);
+		
+		if(typeof url == "function"){
+			var lryics = url();
+			var arr = parseLyric(lryics);
 			for (var i = 0; i < arr.length; i++) {
 				var lry = arr[i];
 				var p = document.createElement("p");
@@ -383,7 +383,25 @@
 				p.style.overflow="hidden";
 				dom.appendChild(p);
 			}
-		});
+						
+		}else{
+			//解析lrc格式的lrc文件。
+			$.get(url, undefined, function(d) {
+				var arr = parseLyric(d);
+				for (var i = 0; i < arr.length; i++) {
+					var lry = arr[i];
+					var p = document.createElement("p");
+
+					$(p).data("time", lry[0]);
+					p.innerHTML = lry[1];
+					p.style.overflow="hidden";
+					dom.appendChild(p);
+				}
+			});
+		}
+		
+
+		
 		return this;
 
 	};
