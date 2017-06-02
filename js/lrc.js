@@ -2,7 +2,7 @@
 * Audio lyric
 * Audio音乐歌词滚动显示 Javascript插件
 * git:https://git.coding.net/xcr_abcd/music.git
-* 版本号：v16.0726
+* 版本号：v17.0602
 */
 ;(function(window, document,undefined) {
 
@@ -155,10 +155,10 @@
 		if (lrc.fix != undefined) {
 			this.options.fix = lrc.fix;
 		}
-		
+
 		if(this.options.initMargin==null){
 			this.options.initMargin = parseInt($(this.dom).css("marginTop"));
-			
+
 		}
 
 		this.lrcobj = lrc;
@@ -218,7 +218,7 @@
 
 		if (f < this.lrc.length && f > 0) {
 			var marin = this.options.initMargin - this.options.fix * f;
-			
+
 			this.dom.style.marginTop = marin + "px";
 			this.current = f;
 		}
@@ -313,15 +313,15 @@
 	function timeAccept(currentTime, nextTime) {
 		return currentTime > nextTime || Math.abs(currentTime - nextTime) <= 0.5
 	}
-	
+
 	//audio provider
 	//如果浏览器支持audio，则provider为html5Audio，否则为AudioJs。
 	//在window.activeAudio中使用provider.
-	
-	
-	
+
+
+
 	function Html5Audio(dom,timeupdate,seeked){
-		this.dom = dom;		
+		this.dom = dom;
 		if(typeof timeupdate=="function"){
 			dom.ontimeupdate = function(){
 				timeupdate(this.currentTime);
@@ -333,20 +333,20 @@
 			};
 		}
 	}
-	
-	
+
+
 	function AudioJs(dom,timeupdate,seeked){
-		
+
 		if(typeof window.audiojs != "object"&& typeof window.audiojs.events!="object"){
 			throw new ReferenceError("audiojs is not correctly defined!");
 		}
-		
+
 		audiojs.events.ready(function(){
-			
+
 			var player = audiojs.create(dom,{
 				updatePlayhead:function(percent){
 					if(typeof timeupdate=="function"){
-						
+
 						timeupdate(player.duration*percent);
 					}
 				},
@@ -356,21 +356,36 @@
 					}
 				}
 			});
-			
-		});
-		
-	}
-	
-	
-	
-	
-	
 
-	
+		});
+
+	}
+
+
+
+	var loadLrcArray = window.loadLrcArray = function (dom,array) {
+		this.dom = dom;
+
+		var arr = parseLyric(array);
+
+		for(var i=0;i<arr.length;i++){
+            var lry = arr[i];
+            var p = document.createElement("p");
+            $(p).data("time", lry[0]);
+            p.innerHTML = lry[1];
+            p.style.overflow="hidden";
+            dom.appendChild(p);
+		}
+
+		return this;
+    };
+
+
+
 	// window output
 	var loadLrc = window.loadLrc = function(dom, url) {
 		this.dom = dom;
-		
+
 		if(typeof url == "function"){
 			var lryics = url();
 			var arr = parseLyric(lryics);
@@ -378,12 +393,16 @@
 				var lry = arr[i];
 				var p = document.createElement("p");
 
-				$(p).data("time", lry[0]);
-				p.innerHTML = lry[1];
-				p.style.overflow="hidden";
-				dom.appendChild(p);
+				if(lry[1] != ""){
+                    $(p).data("time", lry[0]);
+                    p.innerHTML = lry[1];
+                    p.style.overflow="hidden";
+                    dom.appendChild(p);
+				}
+
+
 			}
-						
+
 		}else{
 			//解析lrc格式的lrc文件。
 			$.get(url, undefined, function(d) {
@@ -399,9 +418,9 @@
 				}
 			});
 		}
-		
 
-		
+
+
 		return this;
 
 	};
@@ -409,13 +428,13 @@
 	var aa = window.activeAudio = function(audio, lrc) {
 		var t = new timer(audio, lrc);
 		var provider = window.Audio?Html5Audio:AudioJs;
-		
-		
+
+
 		provider(audio,function(currentTime){
 			t.timeChanged(currentTime);
 		},function(currentTime){
 			t.toggle(currentTime);
 		});
-	
+
 	};
 })(window, window.document);
